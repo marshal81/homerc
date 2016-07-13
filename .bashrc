@@ -114,16 +114,6 @@ if ! shopt -oq posix; then
 fi
 #export PS1='\[\033[00;36m\]\w\[\033[0;33m\] $\[\033[0m\] '
 
-# These settings are necessary for the CONBOL project
-#export CONBOL_HOME=/home/o.gorban/ctf-test/conbol
-#export LD_LIBRARY_PATH=$CONBOL_HOME/lib:$CONBOL_HOME/lib/linux26x86:$CONBOL_HOME/lib/linux26x86_64
-#export PATH=$PATH:/usr/lib32:/usr/lib:$CONBOL_HOME/bin:$CONBOL_HOME/llvm_scripts:/usr/include
-
-alias mg='conbol_llvm_makegen -f --symbolic-locals -A x86 --libc -p'
-alias mgpp='conbol_llvm_makegen -f --symbolic-locals -A x86 --libc -p'
-alias run='conbol_llvm_run -f --ignore-errors --silent --nonstop -t 60 -l 10'
-alias rund='conbol_llvm_run -f --ignore-errors --nonstop -t 60 -l 10'
-
 ## #
 ## #   L E S S   C O L O R S   F O R   M A N   P A G E S
 ## #
@@ -176,60 +166,9 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias stash='git stash '
 
-alias mg='conbol_llvm_makegen -F std=gnu89 -f -l --instrOption initLocalVarAsSymbolic -A x86'
-alias mgpp='conbol_llvm_makegen -f -l --instrOption initLocalVarAsSymbolic -A x86'
-alias run='conbol_llvm_run -f 2>2.ll '
-alias runwn='conbol_llvm_run -w -f -n 2>2.ll '
-alias runnw='conbol_llvm_run -w -f -n 2>2.ll '
-alias bad_report='conbol_report --select-segv --select-fail --enable-segv --enable-fail'
-
 alias gdb='gdb -q '
 alias aptitude='sudo aptitude'
-
-
-# These settings are necessary for the CONBOL project
-export CONBOL_HOME=/home/o.gorban/projects/ctf-test/conbol
-export LD_LIBRARY_PATH=$CONBOL_HOME/lib:$CONBOL_HOME/lib/linux26x86:$CONBOL_HOME/lib/linux26x86_64
-#export PATH=$PATH:/usr/lib32:/usr/lib:$CONBOL_HOME/bin:$CONBOL_HOME/llvm_scripts:/usr/include
-
-## #######################################################################
-## ## Setting for Svace
-## #######################################################################
-## if [ -z $OLD_PATH ]; then
-##   export OLD_PATH=$PATH
-## fi
-## function set_svace()
-## {
-##   export SVACE_ROOT=/home/o.gorban/projects/svace-2.1.19-x64-linux
-##   export SVACE_HOME=$SVACE_ROOT
-##   #export SVACE_HOME=$SVACE_ROOT/svace-1.6.0.2-host-x64-CONBOL
-##   export X86_COMPILER_BASE=compilers/clang-3.4-x86-linux
-##   export X64_COMPILER_BASE=compilers/clang-3.4-x64-linux
-##   export OLD_PATH=$PATH
-##   export PATH=$SVACE_HOME/bin:$SVACE_HOME/$X64_COMPILER_BASE/bin:$OLD_PATH
-##   #export PATH=$SVACE_HOME/bin:$SVACE_HOME/$X86_COMPILER_BASE/bin:$SVACE_HOME/$X64_COMPILER_BASE/bin:$SVACE_HOME/svace-1.6.0-src/compilers-building/tool-wrappers:$OLD_PATH
-##   echo "Use SVACE at $SVACE_HOME" 
-##   which svace
-##   which clang
-## }
-## function unset_svace()
-## {
-##   if [ -n $OLD_PATH ]; then
-##      export PATH=$OLD_PATH
-##   fi
-##   export SVACE_ROOT=
-##   export SVACE_HOME=
-##   export X86_COMPILER_BASE=
-##   export X64_COMPILER_BASE=
-##   export OLD_PATH=
-##   echo "SVACE deactivated." 
-##   which clang
-## }
-## #######################################################################
-
-# svace config
-export SVACE_HOME="/home/o.gorban/prj/svace-checkers-java-security/svace-release/svace-2.1.43-x64-linux"
-export PATH=$SVACE_HOME/bin:$SVACE_HOME/$X86_COMPILER_BASE/bin:$SVACE_HOME/$X64_COMPILER_BASE:$PATH
+alias sl=ls
 
 export CDPATH=.:~
 
@@ -244,4 +183,7 @@ man() {
 	   man "$@"
 }
 
+function mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+function goto { goto=`which $1`; cd ${goto%/*}; }
 
+export ORIGINAL_PATH=$PATH
